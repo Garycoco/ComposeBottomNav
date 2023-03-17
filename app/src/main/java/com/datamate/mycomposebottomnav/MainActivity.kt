@@ -4,19 +4,16 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.rounded.Home
-import androidx.compose.material.icons.rounded.Phone
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -76,7 +73,7 @@ fun AppBottomBar(navController: NavController = rememberNavController()) {
             NavigationBarItem(
                 selected = selectedItem,
                 onClick = { navController.navigate(item.route) },
-                icon = { Icon(imageVector = item.icon, contentDescription = "${item.icon}") },
+                icon = { Icon(imageVector = if (selectedItem) item.selectedIcons else item.icon, contentDescription = "${item.icon}") },
             )
         }
     }
