@@ -15,6 +15,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -72,9 +73,18 @@ fun AppBottomBar(navController: NavController = rememberNavController()) {
             val selectedItem = item.route == backstack.value?.destination?.route
             NavigationBarItem(
                 selected = selectedItem,
-                onClick = { navController.navigate(item.route) },
+                onClick = { navigateTo(item.route, navController) },
                 icon = { Icon(imageVector = if (selectedItem) item.selectedIcons else item.icon, contentDescription = "${item.icon}") },
             )
         }
+    }
+}
+fun navigateTo(route: String, navController: NavController) {
+    navController.navigate(route) {
+        popUpTo(navController.graph.findStartDestination().id) {
+            saveState = true
+        }
+        launchSingleTop = true
+        restoreState = true
     }
 }
